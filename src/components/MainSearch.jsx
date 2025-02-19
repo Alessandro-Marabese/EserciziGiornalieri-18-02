@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Spinner } from "react-bootstrap";
 import Job from "./Job";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +10,7 @@ const MainSearch = () => {
   //const [jobs, setJobs] = useState([]);
   const dispatch = useDispatch();
   const jobs = useSelector((state) => state.jobs.content);
+  const isLoading = useSelector((state) => state.jobs.isLoading);
 
   const handleChange = (e) => {
     setQuery(e.target.value);
@@ -25,8 +26,10 @@ const MainSearch = () => {
     <Container>
       <Row>
         <Col xs={10} className="mx-auto my-3">
-          <h1 className="display-1">Remote Jobs Search</h1>
+          <h1 className="display-1 d-inline-block me-3">Remote Jobs Search</h1>
+          {isLoading && <Spinner animation="border" variant="primary" />}
           <Button
+            className="d-block"
             color="primary"
             onClick={() => {
               navigate("/Favourites");
